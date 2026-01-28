@@ -7,38 +7,38 @@ import { ExternalLink, Github } from "lucide-react";
 
 const projects = [
   {
-    title: "Project One",
+    title: "Data Pipeline Platform",
     description:
-      "A modern web application built with Next.js and TypeScript. Features include user authentication, real-time updates, and a responsive design.",
+      "An end-to-end data pipeline processing millions of events daily. Features real-time streaming, data transformation, and automated quality checks.",
     image: "/projects/project1.jpg",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB"],
+    technologies: ["Apache Spark", "Airflow", "Kafka", "Python"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
   },
   {
-    title: "Project Two",
+    title: "Microservices Infrastructure",
     description:
-      "An e-commerce platform with a seamless shopping experience. Includes cart functionality, payment integration, and order management.",
+      "Kubernetes-based microservices platform with service mesh, automated scaling, and comprehensive monitoring and alerting.",
     image: "/projects/project2.jpg",
-    technologies: ["React", "Node.js", "Express", "Stripe"],
+    technologies: ["Kubernetes", "Go", "Terraform", "Prometheus"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
   },
   {
-    title: "Project Three",
+    title: "API Gateway Service",
     description:
-      "A portfolio website for a creative professional. Features smooth animations, gallery showcase, and contact form integration.",
+      "High-performance API gateway handling authentication, rate limiting, and request routing for distributed services.",
     image: "/projects/project3.jpg",
-    technologies: ["Next.js", "Framer Motion", "Tailwind CSS"],
+    technologies: ["Go", "Redis", "PostgreSQL", "Docker"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
   },
   {
-    title: "Project Four",
+    title: "CI/CD Automation Platform",
     description:
-      "A task management application with drag-and-drop functionality, team collaboration features, and real-time notifications.",
+      "Automated deployment pipeline with infrastructure as code, automated testing, and zero-downtime deployments across environments.",
     image: "/projects/project4.jpg",
-    technologies: ["React", "TypeScript", "Firebase", "DnD Kit"],
+    technologies: ["Jenkins", "Terraform", "AWS", "Python"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
   },
