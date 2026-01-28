@@ -9,22 +9,22 @@ const values = [
   {
     icon: Zap,
     title: "Performance",
-    description: "Optimized code for fast, responsive applications",
+    description: "Optimized systems for high throughput and low latency",
   },
   {
     icon: Users,
-    title: "Accessibility",
-    description: "Inclusive design for all users",
+    title: "Scalability",
+    description: "Infrastructure that grows with your needs",
   },
   {
     icon: Code,
     title: "Clean Code",
-    description: "Maintainable and scalable architecture",
+    description: "Maintainable and well-documented solutions",
   },
   {
     icon: Sparkles,
-    title: "User-Centered",
-    description: "Intuitive interfaces that delight users",
+    title: "Automation",
+    description: "CI/CD pipelines and infrastructure as code",
   },
 ];
 
@@ -55,14 +55,14 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <p className="text-[var(--muted)] mb-6 leading-relaxed">
-              Hello! I&apos;m Omar, a passionate web developer with expertise in
-              building modern, responsive, and user-friendly web applications.
-              I love turning complex problems into simple, beautiful solutions.
+              Hello! I&apos;m Omar, a Software Engineer with a focus on Backend
+              development, Data Engineering, and DevOps. I enjoy building robust
+              systems that handle data at scale and automate complex workflows.
             </p>
             <p className="text-[var(--muted)] mb-8 leading-relaxed">
-              With a strong foundation in both front-end and back-end technologies,
-              I create seamless digital experiences that not only look great but
-              also perform exceptionally well.
+              With experience in designing APIs, building data pipelines, and
+              managing cloud infrastructure, I help teams ship reliable software
+              faster through automation and best practices.
             </p>
 
             <div className="space-y-4">
