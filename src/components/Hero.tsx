@@ -28,7 +28,7 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
         >
           <span className="inline-block px-4 py-2 bg-[var(--secondary)] text-[var(--primary)] rounded-full text-sm font-medium mb-6">
-            Available for freelance work
+            Backend | Data | DevOps
           </span>
         </motion.div>
 
@@ -38,11 +38,11 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-6"
         >
-          I craft responsive web
+          I build scalable systems
           <br />
-          applications where
+          and data pipelines where
           <br />
-          <span className="text-[var(--primary)]">technology meets creativity</span>
+          <span className="text-[var(--primary)]">reliability meets performance</span>
         </motion.h1>
 
         <motion.p
@@ -51,8 +51,8 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg text-[var(--muted)] mb-8 max-w-2xl mx-auto"
         >
-          A passionate Full-Stack Developer focused on building modern,
-          performant, and user-friendly web experiences.
+          A Software Engineer focused on Backend development, Data Engineering,
+          and DevOps. Building robust, scalable infrastructure and data solutions.
         </motion.p>
 
         <motion.div
