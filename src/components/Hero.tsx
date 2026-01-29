@@ -62,7 +62,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <button
-            data-cal-link="your-username/30min"
+            data-cal-link="omar-ashraf-omar-xyzwoj/30min"
             data-cal-config='{"layout":"month_view"}'
             className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors duration-200 font-medium"
           >
