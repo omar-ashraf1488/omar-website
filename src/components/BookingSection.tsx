@@ -35,9 +35,8 @@ export default function BookingSection() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-white rounded-lg shadow-sm border border-[var(--border)] overflow-hidden"
         >
-          {/* Replace "your-username/30min" with your actual Cal.com link */}
           <Cal
-            calLink="your-username/30min"
+            calLink="omar-ashraf-omar-xyzwoj/30min"
             style={{
               width: "100%",
               height: "600px",
