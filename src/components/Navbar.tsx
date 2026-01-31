@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Github, Linkedin, Twitter } from "lucide-react";
+import type { SiteConfig } from "@/types/notion";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -12,14 +13,18 @@ const navLinks = [
   { name: "Book a Call", href: "#booking" },
 ];
 
-const socialLinks = [
-  { name: "GitHub", href: "https://github.com", icon: Github },
-  { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
-  { name: "Twitter", href: "https://twitter.com", icon: Twitter },
-];
+interface NavbarProps {
+  config?: SiteConfig;
+}
 
-export default function Navbar() {
+export default function Navbar({ config }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const socialLinks = [
+    { name: "GitHub", href: config?.githubUrl || "https://github.com", icon: Github },
+    { name: "LinkedIn", href: config?.linkedinUrl || "https://linkedin.com", icon: Linkedin },
+    { name: "Twitter", href: config?.twitterUrl || "https://twitter.com", icon: Twitter },
+  ];
 
   return (
     <motion.nav
