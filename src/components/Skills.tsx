@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import type { SkillCategory } from "@/types/notion";
 
-const skillCategories = [
+// Default skills for fallback
+const defaultSkillCategories: SkillCategory[] = [
   {
     title: "Backend",
     skills: ["Python", "Go", "Node.js", "REST APIs", "GraphQL", "gRPC"],
@@ -27,9 +29,15 @@ const skillCategories = [
   },
 ];
 
-export default function Skills() {
+interface SkillsProps {
+  skills?: SkillCategory[];
+}
+
+export default function Skills({ skills }: SkillsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const displaySkills = skills && skills.length > 0 ? skills : defaultSkillCategories;
 
   return (
     <section id="skills" className="py-20 px-4">
@@ -51,7 +59,7 @@ export default function Skills() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, categoryIndex) => (
+          {displaySkills.map((category, categoryIndex) => (
             <motion.div
               key={category.title}
               initial={{ opacity: 0, y: 30 }}
