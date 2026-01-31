@@ -4,10 +4,17 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Cal from "@calcom/embed-react";
+import type { SiteConfig } from "@/types/notion";
 
-export default function BookingSection() {
+interface BookingSectionProps {
+  config?: SiteConfig;
+}
+
+export default function BookingSection({ config }: BookingSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const calLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
 
   return (
     <section id="booking" className="py-20 px-4">
@@ -36,7 +43,7 @@ export default function BookingSection() {
           className="bg-white rounded-lg shadow-sm border border-[var(--border)] overflow-hidden"
         >
           <Cal
-            calLink="omar-ashraf-omar-xyzwoj/30min"
+            calLink={calLink}
             style={{
               width: "100%",
               height: "600px",
