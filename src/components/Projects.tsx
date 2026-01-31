@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink, Github } from "lucide-react";
+import type { Project } from "@/types/notion";
 
-const projects = [
+// Default projects for fallback
+const defaultProjects: Project[] = [
   {
+    id: "1",
     title: "Data Pipeline Platform",
     description:
       "An end-to-end data pipeline processing millions of events daily. Features real-time streaming, data transformation, and automated quality checks.",
@@ -14,8 +17,10 @@ const projects = [
     technologies: ["Apache Spark", "Airflow", "Kafka", "Python"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
+    order: 1,
   },
   {
+    id: "2",
     title: "Microservices Infrastructure",
     description:
       "Kubernetes-based microservices platform with service mesh, automated scaling, and comprehensive monitoring and alerting.",
@@ -23,8 +28,10 @@ const projects = [
     technologies: ["Kubernetes", "Go", "Terraform", "Prometheus"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
+    order: 2,
   },
   {
+    id: "3",
     title: "API Gateway Service",
     description:
       "High-performance API gateway handling authentication, rate limiting, and request routing for distributed services.",
@@ -32,8 +39,10 @@ const projects = [
     technologies: ["Go", "Redis", "PostgreSQL", "Docker"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
+    order: 3,
   },
   {
+    id: "4",
     title: "CI/CD Automation Platform",
     description:
       "Automated deployment pipeline with infrastructure as code, automated testing, and zero-downtime deployments across environments.",
@@ -41,12 +50,19 @@ const projects = [
     technologies: ["Jenkins", "Terraform", "AWS", "Python"],
     liveUrl: "https://example.com",
     githubUrl: "https://github.com",
+    order: 4,
   },
 ];
 
-export default function Projects() {
+interface ProjectsProps {
+  projects?: Project[];
+}
+
+export default function Projects({ projects }: ProjectsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const displayProjects = projects && projects.length > 0 ? projects : defaultProjects;
 
   return (
     <section id="projects" className="py-20 px-4 bg-[var(--secondary)]">
@@ -68,20 +84,30 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <motion.div
-              key={project.title}
+              key={project.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white rounded-lg overflow-hidden shadow-sm border border-[var(--border)] group"
             >
-              {/* Project Image Placeholder */}
-              <div className="h-48 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] flex items-center justify-center">
-                <span className="text-white text-lg font-medium">
-                  {project.title}
-                </span>
-              </div>
+              {/* Project Image */}
+              {project.image ? (
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              ) : (
+                <div className="h-48 bg-gradient-to-br from-[var(--primary)] to-[var(--accent)] flex items-center justify-center">
+                  <span className="text-white text-lg font-medium">
+                    {project.title}
+                  </span>
+                </div>
+              )}
 
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-[var(--foreground)] mb-2">
@@ -105,24 +131,28 @@ export default function Projects() {
 
                 {/* Links */}
                 <div className="flex gap-4">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[var(--primary)] hover:underline text-sm"
-                  >
-                    <ExternalLink size={16} />
-                    Live Demo
-                  </a>
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[var(--muted)] hover:text-[var(--foreground)] text-sm"
-                  >
-                    <Github size={16} />
-                    Source Code
-                  </a>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[var(--primary)] hover:underline text-sm"
+                    >
+                      <ExternalLink size={16} />
+                      Live Demo
+                    </a>
+                  )}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[var(--muted)] hover:text-[var(--foreground)] text-sm"
+                    >
+                      <Github size={16} />
+                      Source Code
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
