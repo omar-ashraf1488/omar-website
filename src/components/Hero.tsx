@@ -4,8 +4,15 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Calendar } from "lucide-react";
 import { getCalApi } from "@calcom/embed-react";
+import type { SiteConfig } from "@/types/notion";
 
-export default function Hero() {
+interface HeroProps {
+  config?: SiteConfig;
+}
+
+export default function Hero({ config }: HeroProps) {
+  const calLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
+
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
@@ -28,7 +35,7 @@ export default function Hero() {
           transition={{ duration: 0.5 }}
         >
           <span className="inline-block px-4 py-2 bg-[var(--secondary)] text-[var(--primary)] rounded-full text-sm font-medium mb-6">
-            Backend | Data | DevOps
+            {config?.heroBadge || "Backend | Data | DevOps"}
           </span>
         </motion.div>
 
@@ -38,11 +45,30 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-6"
         >
-          I build scalable systems
-          <br />
-          and data pipelines where
-          <br />
-          <span className="text-[var(--primary)]">reliability meets performance</span>
+          {config?.heroHeading ? (
+            <>
+              {config.heroHeading.split("\n").map((line, i, arr) => (
+                <span key={i}>
+                  {i === arr.length - 1 ? (
+                    <span className="text-[var(--primary)]">{line}</span>
+                  ) : (
+                    <>
+                      {line}
+                      <br />
+                    </>
+                  )}
+                </span>
+              ))}
+            </>
+          ) : (
+            <>
+              I build scalable systems
+              <br />
+              and data pipelines where
+              <br />
+              <span className="text-[var(--primary)]">reliability meets performance</span>
+            </>
+          )}
         </motion.h1>
 
         <motion.p
@@ -51,8 +77,8 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg text-[var(--muted)] mb-8 max-w-2xl mx-auto"
         >
-          A Software Engineer focused on Backend development, Data Engineering,
-          and DevOps. Building robust, scalable infrastructure and data solutions.
+          {config?.heroDescription ||
+            "A Software Engineer focused on Backend development, Data Engineering, and DevOps. Building robust, scalable infrastructure and data solutions."}
         </motion.p>
 
         <motion.div
@@ -62,7 +88,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <button
-            data-cal-link="omar-ashraf-omar-xyzwoj/30min"
+            data-cal-link={calLink}
             data-cal-config='{"layout":"month_view"}'
             className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--primary-hover)] transition-colors duration-200 font-medium"
           >
