@@ -6,54 +6,6 @@ import { useRef } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/types/notion";
 
-// Default projects for fallback
-const defaultProjects: Project[] = [
-  {
-    id: "1",
-    title: "Data Pipeline Platform",
-    description:
-      "An end-to-end data pipeline processing millions of events daily. Features real-time streaming, data transformation, and automated quality checks.",
-    image: "/projects/project1.jpg",
-    technologies: ["Apache Spark", "Airflow", "Kafka", "Python"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    order: 1,
-  },
-  {
-    id: "2",
-    title: "Microservices Infrastructure",
-    description:
-      "Kubernetes-based microservices platform with service mesh, automated scaling, and comprehensive monitoring and alerting.",
-    image: "/projects/project2.jpg",
-    technologies: ["Kubernetes", "Go", "Terraform", "Prometheus"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    order: 2,
-  },
-  {
-    id: "3",
-    title: "API Gateway Service",
-    description:
-      "High-performance API gateway handling authentication, rate limiting, and request routing for distributed services.",
-    image: "/projects/project3.jpg",
-    technologies: ["Go", "Redis", "PostgreSQL", "Docker"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    order: 3,
-  },
-  {
-    id: "4",
-    title: "CI/CD Automation Platform",
-    description:
-      "Automated deployment pipeline with infrastructure as code, automated testing, and zero-downtime deployments across environments.",
-    image: "/projects/project4.jpg",
-    technologies: ["Jenkins", "Terraform", "AWS", "Python"],
-    liveUrl: "https://example.com",
-    githubUrl: "https://github.com",
-    order: 4,
-  },
-];
-
 interface ProjectsProps {
   projects?: Project[];
 }
@@ -62,7 +14,7 @@ export default function Projects({ projects }: ProjectsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const displayProjects = projects && projects.length > 0 ? projects : defaultProjects;
+  const displayProjects = projects || [];
 
   return (
     <section id="projects" className="py-20 px-4 bg-[var(--secondary)]">
