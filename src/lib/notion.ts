@@ -74,12 +74,12 @@ export async function getProjects(): Promise<Project[]> {
       const props = (page as { properties: Record<string, unknown> }).properties;
       return {
         id: page.id,
-        title: getTitle(props.Title),
-        description: getRichText(props.Description),
-        image: getFile(props.Image),
-        technologies: getMultiSelect(props.Technologies),
-        liveUrl: getUrl(props["Live URL"]),
-        githubUrl: getUrl(props["GitHub URL"]),
+        title: getTitle(props.title),
+        description: getRichText(props.description),
+        image: getFile(props.image),
+        technologies: getMultiSelect(props.technologies),
+        liveUrl: getUrl(props.liveUrl),
+        githubUrl: getUrl(props.githubUrl),
         order: getNumber(props.Order),
       };
     });
@@ -96,7 +96,7 @@ export async function getSkills(): Promise<SkillCategory[]> {
   try {
     const response = await notion.dataSources.query({
       data_source_id: SKILLS_DB,
-      sorts: [{ property: "Order", direction: "ascending" }],
+      sorts: [{ property: "order", direction: "ascending" }],
     });
 
     // Group skills by category
@@ -104,31 +104,26 @@ export async function getSkills(): Promise<SkillCategory[]> {
 
     response.results.forEach((page) => {
       const props = (page as { properties: Record<string, unknown> }).properties;
-      const name = getTitle(props.Name);
-      const category = getSelect(props.Category);
+      const name = getTitle(props.title);
+      const categories = getMultiSelect(props.category);
 
-      if (category && name) {
-        const existing = categoryMap.get(category) || [];
-        existing.push(name);
-        categoryMap.set(category, existing);
+      // Handle multiple categories by adding the skill to each
+      if (categories.length > 0 && name) {
+        categories.forEach((category) => {
+          const existing = categoryMap.get(category) || [];
+          existing.push(name);
+          categoryMap.set(category, existing);
+        });
       }
     });
 
-    // Convert to array with predefined order
-    const categoryOrder = [
-      "Backend",
-      "Data Engineering",
-      "Databases",
-      "DevOps & Cloud",
-      "Monitoring & Tools",
-    ];
-
-    return categoryOrder
-      .filter((cat) => categoryMap.has(cat))
-      .map((title) => ({
+    // Convert to array and sort alphabetically
+    return Array.from(categoryMap.entries())
+      .map(([title, skills]) => ({
         title,
-        skills: categoryMap.get(title) || [],
-      }));
+        skills,
+      }))
+      .sort((a, b) => a.title.localeCompare(b.title));
   } catch (error) {
     console.error("Error fetching skills:", error);
     return [];
@@ -137,37 +132,33 @@ export async function getSkills(): Promise<SkillCategory[]> {
 
 // Fetch site configuration
 export async function getSiteConfig(): Promise<SiteConfig> {
-  const defaultConfig: SiteConfig = {
-    heroBadge: "Backend | Data | DevOps",
-    heroHeading:
-      "I build scalable systems and data pipelines where reliability meets performance",
-    heroDescription:
-      "A Software Engineer focused on Backend development, Data Engineering, and DevOps. Building robust, scalable infrastructure and data solutions.",
-    aboutBio1:
-      "Hello! I'm Omar, a Software Engineer with a focus on Backend development, Data Engineering, and DevOps. I enjoy building robust systems that handle data at scale and automate complex workflows.",
-    aboutBio2:
-      "With experience in designing APIs, building data pipelines, and managing cloud infrastructure, I help teams ship reliable software faster through automation and best practices.",
-    location: "Your Location",
-    email: "your.email@example.com",
-    githubUrl: "https://github.com",
-    linkedinUrl: "https://linkedin.com",
-    twitterUrl: "https://twitter.com",
-    calLink: "omar-ashraf-omar-xyzwoj/30min",
-  };
-
-  if (!CONFIG_DB) return defaultConfig;
+  if (!CONFIG_DB) {
+    throw new Error("NOTION_CONFIG_DB environment variable is not set");
+  }
 
   try {
     const response = await notion.dataSources.query({
       data_source_id: CONFIG_DB,
     });
 
-    const config = { ...defaultConfig };
+    const config: SiteConfig = {
+      heroBadge: "",
+      heroHeading: "",
+      heroDescription: "",
+      aboutBio1: "",
+      aboutBio2: "",
+      location: "",
+      email: "",
+      githubUrl: "",
+      linkedinUrl: "",
+      twitterUrl: "",
+      calLink: "",
+    };
 
     response.results.forEach((page) => {
       const props = (page as { properties: Record<string, unknown> }).properties;
-      const key = getTitle(props.Key);
-      const value = getRichText(props.Value);
+      const key = getTitle(props.key);
+      const value = getRichText(props.value);
 
       if (key && value) {
         switch (key) {
@@ -211,7 +202,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     return config;
   } catch (error) {
     console.error("Error fetching site config:", error);
-    return defaultConfig;
+    throw error;
   }
 }
 
@@ -222,17 +213,17 @@ export async function getValues(): Promise<Value[]> {
   try {
     const response = await notion.dataSources.query({
       data_source_id: VALUES_DB,
-      sorts: [{ property: "Order", direction: "ascending" }],
+      sorts: [{ property: "order", direction: "ascending" }],
     });
 
     return response.results.map((page) => {
       const props = (page as { properties: Record<string, unknown> }).properties;
       return {
         id: page.id,
-        title: getTitle(props.Title),
-        description: getRichText(props.Description),
-        icon: getSelect(props.Icon),
-        order: getNumber(props.Order),
+        title: getTitle(props.Name),
+        description: getRichText(props.description),
+        icon: getSelect(props.icon),
+        order: getNumber(props.order),
       };
     });
   } catch (error) {
