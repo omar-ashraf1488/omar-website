@@ -11,7 +11,16 @@ interface HeroProps {
 }
 
 export default function Hero({ config }: HeroProps) {
-  const calLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
+  // Extract path from full URL or use as-is if already a path
+  const rawCalLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
+  let calLink = rawCalLink;
+  try {
+    const url = new URL(rawCalLink);
+    calLink = url.pathname.substring(1); // Remove leading /
+  } catch {
+    // Already a path, not a full URL
+    calLink = rawCalLink;
+  }
 
   useEffect(() => {
     (async function () {

@@ -14,7 +14,16 @@ export default function BookingSection({ config }: BookingSectionProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const calLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
+  // Extract path from full URL or use as-is if already a path
+  const rawCalLink = config?.calLink || "omar-ashraf-omar-xyzwoj/30min";
+  let calLink = rawCalLink;
+  try {
+    const url = new URL(rawCalLink);
+    calLink = url.pathname.substring(1); // Remove leading /
+  } catch {
+    // Already a path, not a full URL
+    calLink = rawCalLink;
+  }
 
   return (
     <section id="booking" className="py-20 px-4">
