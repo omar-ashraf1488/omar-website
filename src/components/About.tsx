@@ -14,38 +14,6 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; size?: n
   Sparkles,
 };
 
-// Default values for fallback
-const defaultValues = [
-  {
-    id: "1",
-    icon: "Zap",
-    title: "Performance",
-    description: "Optimized systems for high throughput and low latency",
-    order: 1,
-  },
-  {
-    id: "2",
-    icon: "Users",
-    title: "Scalability",
-    description: "Infrastructure that grows with your needs",
-    order: 2,
-  },
-  {
-    id: "3",
-    icon: "Code",
-    title: "Clean Code",
-    description: "Maintainable and well-documented solutions",
-    order: 3,
-  },
-  {
-    id: "4",
-    icon: "Sparkles",
-    title: "Automation",
-    description: "CI/CD pipelines and infrastructure as code",
-    order: 4,
-  },
-];
-
 interface AboutProps {
   config?: SiteConfig;
   values?: Value[];
@@ -55,7 +23,7 @@ export default function About({ config, values }: AboutProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const displayValues = values && values.length > 0 ? values : defaultValues;
+  const displayValues = values || [];
 
   return (
     <section id="about" className="py-20 px-4 bg-[var(--secondary)]">
