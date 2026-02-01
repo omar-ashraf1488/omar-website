@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { getProjects, getSkills, getSiteConfig, getValues } from "@/lib/notion";
 
 // Revalidate every hour
-export const revalidate = 3600;
+export const revalidate = 0;
 
 export default async function Home() {
   // Fetch all data from Notion in parallel
