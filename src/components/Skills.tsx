@@ -5,30 +5,6 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 import type { SkillCategory } from "@/types/notion";
 
-// Default skills for fallback
-const defaultSkillCategories: SkillCategory[] = [
-  {
-    title: "Backend",
-    skills: ["Python", "Go", "Node.js", "REST APIs", "GraphQL", "gRPC"],
-  },
-  {
-    title: "Data Engineering",
-    skills: ["Apache Spark", "Airflow", "Kafka", "ETL Pipelines", "SQL", "dbt"],
-  },
-  {
-    title: "Databases",
-    skills: ["PostgreSQL", "MongoDB", "Redis", "Elasticsearch", "Snowflake"],
-  },
-  {
-    title: "DevOps & Cloud",
-    skills: ["AWS", "GCP", "Kubernetes", "Docker", "Terraform", "CI/CD"],
-  },
-  {
-    title: "Monitoring & Tools",
-    skills: ["Prometheus", "Grafana", "Git", "Linux", "Datadog", "Jenkins"],
-  },
-];
-
 interface SkillsProps {
   skills?: SkillCategory[];
 }
@@ -37,7 +13,7 @@ export default function Skills({ skills }: SkillsProps) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const displaySkills = skills && skills.length > 0 ? skills : defaultSkillCategories;
+  const displaySkills = skills || [];
 
   return (
     <section id="skills" className="py-20 px-4">
